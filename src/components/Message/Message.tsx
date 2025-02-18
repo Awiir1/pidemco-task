@@ -1,21 +1,22 @@
 import { StarOutlined } from "@ant-design/icons";
 
-export default function Message() {
+export default function Message(data: {
+  name: string;
+  profile: string;
+  message: string;
+}) {
   return (
     <div>
       <hr />
       <div className="w-full flex py-3">
         <img
           className="w-[70px] h-[75px] mr-3 rounded-full object-cover"
-          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
-          alt=""
+          src={data.profile}
+          alt={data.name}
         />
         <div>
-          <p className="font-bold text-xl">Stephanie</p>
-          <p className="text-lg">
-            I got your first assignment. It was quite good. 🥳 We can continue
-            with the next assignment.
-          </p>
+          <p className="font-bold text-xl">{data.name}</p>
+          <p className="text-lg">{data.message}</p>
         </div>
         <StarOutlined className="text-xl" />
       </div>

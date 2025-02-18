@@ -6,7 +6,7 @@ import {
   PlusCircleFilled,
   BellOutlined,
 } from "@ant-design/icons";
-import Profile from "@/../public/Profile.png";
+import User from "@/../public/user2.jpg";
 import Link from "next/link";
 
 export default function Header() {
@@ -30,7 +30,7 @@ export default function Header() {
           <PlusCircleFilled className="text-3xl" />
           <BellOutlined className="text-3xl" />
           <span className="w-[2px] h-[30px] bg-slate-500 rounded-md"></span>
-          <img src={Profile.src} className="w-10 h-10 rounded-full" />
+          <img src={User.src} className="w-10 h-10 rounded-full object-cover" />
           <p className="text-xl font-semibold">AmirHosein</p>
         </div>
       </div>

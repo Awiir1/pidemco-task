@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import Task from "@/components/Task/Task";
 import Message from "@/components/Message/Message";
+import { messages } from "@/data/Message";
 
 export default function Dashboard() {
   return (
@@ -72,8 +73,8 @@ export default function Dashboard() {
           Client Messages
         </p>
         <div className="overflow-y-auto h-[670px] px-5 mt-5">
-          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-            <Message key={item} />
+          {messages.map((item) => (
+            <Message {...item} key={item.name}/>
           ))}
         </div>
       </div>
