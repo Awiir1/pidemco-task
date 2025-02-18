@@ -7,30 +7,31 @@ import {
   BellOutlined,
 } from "@ant-design/icons";
 import Profile from "@/../public/Profile.png";
+import Link from "next/link";
 
 export default function Header() {
   return (
     <div className="w-full fixed">
-      <div className="mx-5 px-5 my-5 rounded-md flex items-center justify-between">
-        <div className="flex gap-x-5 items-center basis-1/3">
-          <AppstoreOutlined className="text-3xl" />
-          <p className="text-3xl font-semibold drop-shadow-lg">Pidemco.</p>
-          <div className="flex bg-white px-5 rounded-3xl shadow-lg w-full ml-5">
+      <div className="mx-5 px-4 my-5 rounded-md flex items-center justify-between">
+        <div className="flex gap-x-5 items-center basis-5/12">
+          <AppstoreOutlined className="text-4xl" />
+          <Link href={"/"} className="text-4xl font-semibold drop-shadow-lg">Pidemco.</Link>
+          <div className="flex bg-white px-5 rounded-full shadow-lg w-full ml-5">
             <input
-              className="rounded-xl outline-none h-[45px] w-full overflow-hidden items-center flex"
+              className="rounded-xl text-xl outline-none h-[55px] w-full overflow-hidden items-center flex"
               type="text"
               placeholder="Search"
             />
-            <SearchOutlined />
+            <SearchOutlined  className="text-3xl"/>
           </div>
         </div>
         <div className="flex items-center gap-x-2">
-          <MoonOutlined className="text-2xl" />
-          <PlusCircleFilled className="text-2xl" />
-          <BellOutlined className="text-2xl" />
+          <MoonOutlined className="text-3xl" />
+          <PlusCircleFilled className="text-3xl" />
+          <BellOutlined className="text-3xl" />
           <span className="w-[2px] h-[30px] bg-slate-500 rounded-md"></span>
-          <img src={Profile.src} className="w-8 h-8 rounded-full" />
-          <p className="text-xl">AmirHosein</p>
+          <img src={Profile.src} className="w-10 h-10 rounded-full" />
+          <p className="text-xl font-semibold">AmirHosein</p>
         </div>
       </div>
     </div>

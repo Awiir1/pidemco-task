@@ -7,7 +7,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full h-screen overflow-hidden">
       <Header />
       <div className="flex">
         <Navbar />

@@ -21,7 +21,7 @@ export default function Home() {
     <div
       onClick={handleClick}
       className={`w-full h-screen flex flex-col items-center justify-center cursor-pointer 
-      transition-transform duration-500 ${isAnimating ? "-translate-y-full opacity-0" : "opacity-100"}`}
+      transition-transform duration-500 bg-black text-white ${isAnimating ? "-translate-y-full opacity-0" : "opacity-100"}`}
     >
       <h1 className="text-8xl font-semibold">Pidemco.</h1>
       <p className="mt-4 text-xl flex items-center gap-2">

@@ -6,11 +6,14 @@ import {
   CalendarOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  // page path
   const path = usePathname();
 
+  // nav links
   const navs = [
     { name: "Home", link: "/dashboard", icon: <HomeOutlined /> },
     { name: "Chart", link: "/chart", icon: <PieChartOutlined /> },
@@ -19,18 +22,18 @@ export default function Navbar() {
   ];
 
   return (
-    <div className="mt-32 px-7">
+    <div className="mt-28 px-7">
       {navs.map((nav) => (
-        <div
+        <Link
+          href={nav.link}
           key={nav.name}
-          className={`text-3xl block mt-5 ${
-            nav.link == path
-              ? "bg-black text-white rounded-full px-3 py-2 shadow-lg"
-              : "px-3"
+          className={`text-3xl block mt-5 px-3 cursor-pointer ${
+            nav.link == path &&
+            "bg-black text-white rounded-xl py-2.5 shadow-lg"
           }`}
         >
           {nav.icon}
-        </div>
+        </Link>
       ))}
     </div>
   );
