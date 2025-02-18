@@ -1,36 +1,93 @@
+"use client";
+
 import { PlusCircleFilled, MoreOutlined } from "@ant-design/icons";
 import User1 from "@/../public/user1.webp";
 import User2 from "@/../public/user2.jpg";
 
-export default function Task() {
+interface TaskProps {
+  title: string;
+  description: string;
+  date: string;
+}
+
+const colors = [
+  {
+    color: "#FEE4CB",
+    progress: "#ff942e",
+  },
+  {
+    color: "#e9e7fd",
+    progress: "#4f3ff0",
+  },
+  {
+    color: "#DBF6FD",
+    progress: "#096c86",
+  },
+  {
+    color: "#FFD3E2",
+    progress: "#df3670",
+  },
+  {
+    color: "#C8F7DC",
+    progress: "#34c471",
+  },
+];
+
+const getRandomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
+export default function Task({ title, description, date }: TaskProps) {
+  const selectedColor = getRandomColor();
+  const progress = Math.floor(Math.random() * 100);
+
   return (
     <div className="mt-5 w-full">
-      <div className="flex items-center justify-between p-5 mt-5 w-full rounded-xl px-5 bg-[#FEE4CB]">
-        <div className=" basis-1/4">
-          <p className="text-2xl font-semibold">Web Design</p>
-          <p className="text-lg">Prototyping</p>
-          <p className="text-gray-600">December 10, 2024</p>
+      <div
+        className="flex items-center justify-between p-5 mt-5 w-full rounded-xl px-5"
+        style={{ backgroundColor: selectedColor.color }}
+      >
+        <div className="basis-1/4">
+          <p className="text-2xl font-semibold">{title}</p>
+          <p className="text-lg">{description}</p>
+          <p className="text-gray-600">{date}</p>
         </div>
         <div className="basis-1/2">
           <p className="text-lg font-semibold">Progress</p>
           <div className="bg-white h-2 rounded-xl w-full flex">
-            <span className="w-2/3 h-2 rounded-xl  bg-[#ff942e]"></span>
+            <span
+              className="h-2 rounded-xl"
+              style={{
+                backgroundColor: selectedColor.progress,
+                width: `${progress}%`,
+              }}
+            ></span>
           </div>
-          <p className="text-right text-lg font-semibold">60%</p>
+          <p className="text-right text-lg font-semibold">{progress}%</p>
         </div>
         <div className="basis-1/4 grid grid-cols-3 items-center">
           <div className="col-span-2 justify-self-end">
             <div className="flex justify-center items-center self-start">
-              <img className="w-8 h-8 rounded-full object-cover" src={User1.src} alt="" />
+              <img
+                className="w-8 h-8 rounded-full object-cover"
+                src={User1.src}
+              />
               <img
                 className="w-8 h-8 rounded-full -ml-2 object-cover"
                 src={User2.src}
-                alt=""
               />
-              <PlusCircleFilled className="text-3xl text-[#ffb26b] -ml-2" />
+              <PlusCircleFilled
+                className="text-3xl -ml-2"
+                style={{ color: selectedColor.progress }}
+              />
             </div>
             <div className="rounded-full px-5 py-2 bg-white opacity-80 mt-2">
-              <p className="font-semibold text-[#ff942e]">2 Days Left</p>
+              <p
+                className="font-semibold"
+                style={{ color: selectedColor.progress }}
+              >
+                2 Days Left
+              </p>
             </div>
           </div>
           <div className="flex justify-end">

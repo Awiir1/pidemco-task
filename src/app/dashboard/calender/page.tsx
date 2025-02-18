@@ -1,54 +1,80 @@
 "use client";
 
-import { Input, Button, Calendar, theme, CalendarProps } from "antd";
+import { Input, Button, Calendar, theme, Modal } from "antd";
 import { useState } from "react";
 import type { Dayjs } from "dayjs";
 import TaskImg from "@/../public/task.jpg";
 import { motion } from "framer-motion";
+import { addTask } from "@/lib/api";
+import PopUp from "@/components/PopUp/PopUp";
 
-const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
-  console.log(value.format("YYYY-MM-DD"), mode);
-};
+interface PopUpProps {
+  status: "success" | "error" | "info" | "warning" | "404" | "403" | "500";
+  title: string;
+  description: string;
+  isOpen: boolean;
+}
 
 export default function page() {
-  const [value, setValue] = useState("");
-  const [loadings, setLoadings] = useState<boolean[]>([]);
   const { TextArea } = Input;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState<PopUpProps>({
+    status: "info",
+    title: "",
+    description: "",
+    isOpen: false,
+  });
 
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date.format("YYYY-MM-DD"));
   };
 
+  const closePopUp = () => {
+    setModal((prev) => ({ ...prev, isOpen: false }));
+  };
+
   const handleSaveTask = async () => {
+    // Validate fields
     if (!title || !description || !selectedDate) {
-      console.error("Please fill in all fields!");
+      setModal({
+        status: "warning",
+        title: "Incomplete Fields",
+        description: "Please fill in all fields!",
+        isOpen: true,
+      });
       return;
     }
 
+    // set loading state
     setLoading(true);
+
+    // api call to add task
     try {
-      const response = await fetch("/api/addTask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, date: selectedDate }),
+      await addTask({
+        date: selectedDate,
+        title,
+        description,
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log("Task added successfully!");
-        setTitle("");
-        setDescription("");
-        setSelectedDate(null);
-      } else {
-        console.error(data.error || "Something went wrong!");
-      }
+      setModal({
+        status: "success",
+        title: "Task Added",
+        description: "Task has been added successfully",
+        isOpen: true,
+      });
+      setTitle("");
+      setDescription("");
+      setSelectedDate(null);
     } catch (error) {
-      console.error("Failed to add task!");
+      console.error("Failed to add task!", error);
+      setModal({
+        status: "error",
+        title: "Failed to add task",
+        description: "Please try again later",
+        isOpen: true,
+      });
     } finally {
       setLoading(false);
     }
@@ -63,6 +89,7 @@ export default function page() {
 
   return (
     <div className="mt-32 w-full flex gap-x-5">
+      <PopUp {...modal}  onClose={closePopUp}/>
       <div className="bg-white w-1/3 h-fit rounded-3xl drop-shadow-xl p-8">
         <h1 className="text-center text-5xl drop-shadow-xl font-bold mb-5">
           Create Task
@@ -70,6 +97,7 @@ export default function page() {
         <Input
           placeholder="Task Topic"
           className="text-xl w-full"
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <TextArea
@@ -83,7 +111,6 @@ export default function page() {
           <Calendar
             className="text-lg"
             fullscreen={false}
-            onPanelChange={onPanelChange}
             onSelect={handleDateSelect}
           />
         </div>
@@ -105,7 +132,7 @@ export default function page() {
         <img
           className="w-full h-full drop-shadow-xl rounded-3xl object-cover"
           src={TaskImg.src}
-          alt=""
+          alt="Task Image"
         />
       </motion.div>
     </div>

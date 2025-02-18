@@ -10,8 +10,14 @@ import {
 import Task from "@/components/Task/Task";
 import Message from "@/components/Message/Message";
 import { messages } from "@/data/Message";
+import { useTasks } from "@/lib/api";
 
 export default function Dashboard() {
+  const { data: tasks, isLoading, error } = useTasks();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading tasks</p>;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
@@ -63,8 +69,8 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="overflow-y-auto h-[600px]">
-          {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-            <Task key={item} />
+          {tasks.map((item: any) => (
+            <Task key={item.id} {...item}/>
           ))}
         </div>
       </div>
