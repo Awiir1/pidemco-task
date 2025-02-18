@@ -11,12 +11,28 @@ import Task from "@/components/Task/Task";
 import Message from "@/components/Message/Message";
 import { messages } from "@/data/Message";
 import { useTasks } from "@/lib/api";
+import Loading from "@/components/Loading/Loading";
+import { tasksState } from "@/lib/atomJotai";
+import { useEffect } from "react";
+import { useAtom } from "jotai";
 
 export default function Dashboard() {
   const { data: tasks, isLoading, error } = useTasks();
+  const [taskList, setTaskList] = useAtom(tasksState);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading tasks</p>;
+  useEffect(() => {
+    if (tasks) {
+      setTaskList(tasks);
+    }
+  }, [tasks, setTaskList]);
+
+  if (isLoading) return <Loading />;
+  if (error)
+    return (
+      <div className="text-3xl font-bold w-full flex justify-center h-screen items-center">
+        Error loading tasks
+      </div>
+    );
 
   return (
     <motion.div
@@ -69,8 +85,8 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="overflow-y-auto h-[600px]">
-          {tasks.map((item: any) => (
-            <Task key={item.id} {...item}/>
+          {taskList.map((item: any, index: number) => (
+            <Task key={item.id} {...item} index={index} />
           ))}
         </div>
       </div>
@@ -80,7 +96,7 @@ export default function Dashboard() {
         </p>
         <div className="overflow-y-auto h-[670px] px-5 mt-5">
           {messages.map((item) => (
-            <Message {...item} key={item.name}/>
+            <Message {...item} key={item.name} />
           ))}
         </div>
       </div>

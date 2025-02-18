@@ -8,6 +8,7 @@ interface TaskProps {
   title: string;
   description: string;
   date: string;
+  index: number;
 }
 
 const colors = [
@@ -20,25 +21,21 @@ const colors = [
     progress: "#4f3ff0",
   },
   {
-    color: "#DBF6FD",
-    progress: "#096c86",
+    color: "#C8F7DC",
+    progress: "#34c471",
   },
   {
     color: "#FFD3E2",
     progress: "#df3670",
   },
   {
-    color: "#C8F7DC",
-    progress: "#34c471",
+    color: "#DBF6FD",
+    progress: "#096c86",
   },
 ];
 
-const getRandomColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)];
-};
-
-export default function Task({ title, description, date }: TaskProps) {
-  const selectedColor = getRandomColor();
+export default function Task({ title, description, date, index }: TaskProps) {
+  const selectedColor = colors[index % colors.length];
   const progress = Math.floor(Math.random() * 100);
 
   return (

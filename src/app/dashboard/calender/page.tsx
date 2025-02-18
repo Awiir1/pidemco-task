@@ -7,6 +7,8 @@ import TaskImg from "@/../public/task.jpg";
 import { motion } from "framer-motion";
 import { addTask } from "@/lib/api";
 import PopUp from "@/components/PopUp/PopUp";
+import { tasksState } from "@/lib/atomJotai";
+import { useAtom } from "jotai";
 
 interface PopUpProps {
   status: "success" | "error" | "info" | "warning" | "404" | "403" | "500";
@@ -27,6 +29,8 @@ export default function page() {
     description: "",
     isOpen: false,
   });
+
+  const [taskList, setTaskList] = useAtom(tasksState);
 
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date.format("YYYY-MM-DD"));
@@ -53,11 +57,18 @@ export default function page() {
 
     // api call to add task
     try {
-      await addTask({
+      const newTask = {
+        id: Date.now(), // ایجاد یک ID موقت
         date: selectedDate,
         title,
         description,
-      });
+      };
+
+      // ذخیره در API (در صورتی که API پشتیبانی کند)
+      await addTask(newTask);
+
+      setTaskList((prevTasks) => [...prevTasks, newTask]);
+
       setModal({
         status: "success",
         title: "Task Added",
@@ -89,7 +100,7 @@ export default function page() {
 
   return (
     <div className="mt-32 w-full flex gap-x-5">
-      <PopUp {...modal}  onClose={closePopUp}/>
+      <PopUp {...modal} onClose={closePopUp} />
       <div className="bg-white w-1/3 h-fit rounded-3xl drop-shadow-xl p-8">
         <h1 className="text-center text-5xl drop-shadow-xl font-bold mb-5">
           Create Task
