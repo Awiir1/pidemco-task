@@ -14,21 +14,44 @@ export default function page() {
   const [value, setValue] = useState("");
   const [loadings, setLoadings] = useState<boolean[]>([]);
   const { TextArea } = Input;
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const enterLoading = (index: number) => {
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
+  const handleDateSelect = (date: Dayjs) => {
+    setSelectedDate(date.format("YYYY-MM-DD"));
+  };
 
-    setTimeout(() => {
-      setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
-        return newLoadings;
+  const handleSaveTask = async () => {
+    if (!title || !description || !selectedDate) {
+      console.error("Please fill in all fields!");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch("/api/addTask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, date: selectedDate }),
       });
-    }, 3000);
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Task added successfully!");
+        setTitle("");
+        setDescription("");
+        setSelectedDate(null);
+      } else {
+        console.error(data.error || "Something went wrong!");
+      }
+    } catch (error) {
+      console.error("Failed to add task!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const { token } = theme.useToken();
@@ -44,11 +67,15 @@ export default function page() {
         <h1 className="text-center text-5xl drop-shadow-xl font-bold mb-5">
           Create Task
         </h1>
-        <Input placeholder="Task Topic" className="text-xl w-full" />
+        <Input
+          placeholder="Task Topic"
+          className="text-xl w-full"
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <TextArea
-          value={value}
+          value={description}
           className="text-xl my-3"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
           placeholder="Task description"
           autoSize={{ minRows: 3, maxRows: 5 }}
         />
@@ -57,13 +84,14 @@ export default function page() {
             className="text-lg"
             fullscreen={false}
             onPanelChange={onPanelChange}
+            onSelect={handleDateSelect}
           />
         </div>
         <Button
           className="my-4 text-2xl px-14 py-6"
           type="primary"
-          loading={loadings[0]}
-          onClick={() => enterLoading(0)}
+          loading={loading}
+          onClick={handleSaveTask}
         >
           Save Task
         </Button>
