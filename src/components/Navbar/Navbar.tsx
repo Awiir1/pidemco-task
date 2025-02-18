@@ -16,9 +16,9 @@ export default function Navbar() {
   // nav links
   const navs = [
     { name: "Home", link: "/dashboard", icon: <HomeOutlined /> },
-    { name: "Chart", link: "/chart", icon: <PieChartOutlined /> },
-    { name: "Calender", link: "/calender", icon: <CalendarOutlined /> },
-    { name: "Setting", link: "/setting", icon: <SettingOutlined /> },
+    { name: "Chart", link: "/dashboard/chart", icon: <PieChartOutlined /> },
+    { name: "Calender", link: "/dashboard/calender", icon: <CalendarOutlined /> },
+    { name: "Setting", link: "/dashboard/setting", icon: <SettingOutlined /> },
   ];
 
   return (
