@@ -17,16 +17,20 @@ import { useEffect } from "react";
 import { useAtom } from "jotai";
 
 export default function Dashboard() {
+  // get tasks from api and set in atom state for global access
   const { data: tasks, isLoading, error } = useTasks();
   const [taskList, setTaskList] = useAtom(tasksState);
 
   useEffect(() => {
+    // set task list in atom state
     if (tasks) {
       setTaskList(tasks);
     }
   }, [tasks, setTaskList]);
 
+  // loading state
   if (isLoading) return <Loading />;
+  // error state
   if (error)
     return (
       <div className="text-3xl font-bold w-full flex justify-center h-screen items-center">
@@ -85,6 +89,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="overflow-y-auto h-[600px]">
+          {/* Show task data */}
           {taskList.map((item: any, index: number) => (
             <Task key={item.id} {...item} index={index} />
           ))}
@@ -95,6 +100,7 @@ export default function Dashboard() {
           Client Messages
         </p>
         <div className="overflow-y-auto h-[670px] px-5 mt-5">
+          {/*  messages data */}
           {messages.map((item) => (
             <Message {...item} key={item.name} />
           ))}

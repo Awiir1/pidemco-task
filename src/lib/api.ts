@@ -29,6 +29,7 @@ const fetchTasks = async () => {
   return response.data;
 };
 
+// use tasks query hook
 export const useTasks = () => {
   return useQuery({ queryKey: ["tasks"], queryFn: fetchTasks });
 };

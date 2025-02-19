@@ -12,6 +12,7 @@ if (!getApps().length) {
   });
 }
 
+// init firestore
 const db = admin.firestore();
 
 export { db };

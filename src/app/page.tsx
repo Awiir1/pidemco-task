@@ -12,10 +12,10 @@ export default function Home() {
     if (isAnimating) return;
     setIsAnimating(true);
 
-    // منتظر می‌ماند تا انیمیشن اجرا شود، سپس تغییر مسیر می‌دهد
+    // waiting for the animation
     setTimeout(() => {
       router.push("/dashboard");
-    }, 800); // این زمان باید با مدت زمان انیمیشن هماهنگ باشد
+    }, 800);
   };
 
   return (

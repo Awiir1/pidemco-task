@@ -10,6 +10,7 @@ import PopUp from "@/components/PopUp/PopUp";
 import { tasksState } from "@/lib/atomJotai";
 import { useAtom } from "jotai";
 
+// PopUp Props
 interface PopUpProps {
   status: "success" | "error" | "info" | "warning" | "404" | "403" | "500";
   title: string;
@@ -30,12 +31,15 @@ export default function page() {
     isOpen: false,
   });
 
+  // get tasks from atom state
   const [taskList, setTaskList] = useAtom(tasksState);
 
+  // handle date select
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date.format("YYYY-MM-DD"));
   };
 
+  // close pop up
   const closePopUp = () => {
     setModal((prev) => ({ ...prev, isOpen: false }));
   };
@@ -64,11 +68,13 @@ export default function page() {
         description,
       };
 
-      // ذخیره در API (در صورتی که API پشتیبانی کند)
+      // add task to db firestore
       await addTask(newTask);
 
+      // update task list in atom state
       setTaskList((prevTasks) => [...prevTasks, newTask]);
 
+      // show success message
       setModal({
         status: "success",
         title: "Task Added",
