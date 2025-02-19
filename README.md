@@ -18,6 +18,24 @@ Make sure you have the following installed:
 - Node.js (v18 or later)
 - npm or yarn
 
+Tech Stack
+
+Next.js - Framework for server-side rendering and static site generation
+
+TypeScript - Strongly typed JavaScript for better development experience
+
+Tailwind CSS - Utility-first styling framework
+
+Ant Design - UI component library for a sleek and professional look
+
+Firebase - Authentication and Firestore database for real-time data
+
+React Query - Server state management and caching
+
+Jotai - Atomic state management for React
+
+Framer Motion - Animation library for React applications
+
 ### Installation
 1. Clone the repository:
    ```sh
