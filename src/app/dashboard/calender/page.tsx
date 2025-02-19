@@ -9,6 +9,7 @@ import { addTask } from "@/lib/api";
 import PopUp from "@/components/PopUp/PopUp";
 import { tasksState } from "@/lib/atomJotai";
 import { useAtom } from "jotai";
+import Image from "next/image";
 
 // PopUp Props
 interface PopUpProps {
@@ -146,7 +147,7 @@ export default function page() {
         transition={{ duration: 0.5 }}
         className="w-2/3 h-5/6 mr-5"
       >
-        <img
+        <Image
           className="w-full h-full drop-shadow-xl rounded-3xl object-cover"
           src={TaskImg.src}
           alt="Task Image"

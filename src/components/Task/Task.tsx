@@ -3,6 +3,7 @@
 import { PlusCircleFilled, MoreOutlined } from "@ant-design/icons";
 import User1 from "@/../public/user1.webp";
 import User2 from "@/../public/user2.jpg";
+import Image from "next/image";
 
 interface TaskProps {
   title: string;
@@ -65,13 +66,15 @@ export default function Task({ title, description, date, index }: TaskProps) {
         <div className="basis-1/4 grid grid-cols-3 items-center">
           <div className="col-span-2 justify-self-end">
             <div className="flex justify-center items-center self-start">
-              <img
+              <Image
                 className="w-8 h-8 rounded-full object-cover"
                 src={User1.src}
+                alt="User 1"
               />
-              <img
+              <Image
                 className="w-8 h-8 rounded-full -ml-2 object-cover"
                 src={User2.src}
+                alt="User 2"
               />
               <PlusCircleFilled
                 className="text-3xl -ml-2"

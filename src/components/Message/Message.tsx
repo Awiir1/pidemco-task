@@ -1,4 +1,5 @@
 import { StarOutlined } from "@ant-design/icons";
+import Image from "next/image";
 
 export default function Message(data: {
   name: string;
@@ -9,7 +10,7 @@ export default function Message(data: {
     <div>
       <hr />
       <div className="w-full flex py-3">
-        <img
+        <Image
           className="w-[70px] h-[75px] mr-3 rounded-full object-cover"
           src={data.profile}
           alt={data.name}
